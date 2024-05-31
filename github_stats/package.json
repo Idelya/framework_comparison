@@ -1,1 +1,1 @@
-{"type":"module","dependencies":{"fs":"^0.0.1-security","node-fetch":"^3.3.2","octokit":"^4.0.2"}}
+{"type":"module","dependencies":{"canvas":"^2.11.2","chartjs-node-canvas":"^4.1.6","fs":"^0.0.1-security","node-fetch":"^3.3.2","octokit":"^4.0.2"}}
