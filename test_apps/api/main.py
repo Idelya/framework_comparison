@@ -1,19 +1,30 @@
 from fastapi import FastAPI, HTTPException
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 from typing import List, Optional
 import pandas as pd
+import json
+import random
 
 app = FastAPI()
+app.mount("/images", StaticFiles(directory="./images"), name='images')
 
 class Book(BaseModel):
-    Title: str
-    Authors: str
-    Description: Optional[str] = ""
-    Category: str
-    Publisher: str
-    Price_Starting_With: str
-    Publish_Date_Month: str
-    Publish_Date_Year: int
+    id: int
+    title: str
+    authors: str
+    description: Optional[str] = ""
+    category: str
+    publisher: str
+    priceStartingWith: str
+    publishDateMonth: str
+    publishDateYear: int
+
+class ImageMetadata(BaseModel):
+    title: str
+    id: str
+    description: str
+    file_name: str
 
 def read_csv():
     try:
@@ -34,14 +45,29 @@ def read_csv():
         })
         
         df = df.rename(columns={
-            'Price Starting With ($)': 'Price_Starting_With',
-            'Publish Date (Month)': 'Publish_Date_Month',
-            'Publish Date (Year)': 'Publish_Date_Year'
+            'Price Starting With ($)': 'priceStartingWith',
+            'Publish Date (Month)': 'publishDateMonth',
+            'Publish Date (Year)': 'publishDateYear',
+            'Publisher': 'publisher',
+            'Category': 'category',
+            'Description': 'description',
+            'Authors': 'authors',
+            'Title': 'title',
         })
+
+        df.insert(0, 'id', range(1, len(df) + 1))
 
         return df
     except Exception as e:
         print(f"Error reading CSV file: {e}")
+        raise
+
+def read_json():
+    try:
+        with open('gallery.json', 'r') as file:
+            return json.load(file)
+    except Exception as e:
+        print(f"Error reading JSON file: {e}")
         raise
 
 try:
@@ -50,17 +76,36 @@ except Exception as e:
     df = None
     print(f"Failed to load CSV at startup: {e}")
 
+try:
+    image_data = read_json()
+except Exception as e:
+    image_data = None
+    print(f"Failed to load JSON at startup: {e}")
+
 @app.get("/books", response_model=List[Book])
 async def get_books():
     try:
         if df is None:
             raise HTTPException(status_code=500, detail="CSV file not loaded")
 
-        df['Price_Starting_With'] = df['Price_Starting_With'].astype(str)
+        df['priceStartingWith'] = df['priceStartingWith'].astype(str)
 
         books = df.to_dict(orient='records')
 
         return books
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error processing request: {e}")
+
+@app.get("/images-data", response_model=List[ImageMetadata])
+async def get_images():
+    try:
+        if image_data is None:
+            raise HTTPException(status_code=500, detail="JSON file not loaded")
+        
+        shuffled_images = image_data.copy()
+        random.shuffle(shuffled_images)
+        
+        return shuffled_images
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error processing request: {e}")
 
