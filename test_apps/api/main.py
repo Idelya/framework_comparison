@@ -26,6 +26,11 @@ class ImageMetadata(BaseModel):
     description: str
     file_name: str
 
+def normalize_text(text: str) -> str:
+    if isinstance(text, str):
+        return text.replace('\u2028', '').replace('â€”', '—').replace('â€¨', '')
+    return text
+
 def read_csv():
     try:
         df = pd.read_csv('BooksDatasetClean.csv')
@@ -34,6 +39,7 @@ def read_csv():
         for col in df.columns:
             if df[col].dtype == 'object':
                 df[col] = df[col].str.strip()
+                df[col] = df[col].apply(normalize_text)
         
         df = df.fillna({
             'Description': "",
