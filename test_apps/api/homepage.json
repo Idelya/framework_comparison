@@ -1,0 +1,42 @@
+{
+    "banner": {
+      "image": {
+        "title": "Baner Biblioteki",
+        "id": "banner1",
+        "description": "Piękne wnętrze biblioteki",
+        "file_name": "images/book-7108741_1920.jpg"
+      },
+      "title": "Witamy w naszej Bibliotece",
+      "text": "Odkryj świat wiedzy i przygody dzięki naszej ogromnej kolekcji książek.",
+      "list": [
+        "Szeroki wybór gatunków",
+        "Komfortowe miejsca do czytania",
+        "Katalog online",
+        "Specjalne wydarzenia i warsztaty"
+      ]
+    },
+    "aboutUs": {
+      "image1": {
+        "title": "Atlas",
+        "id": "atlas-1052011_1920",
+        "description": "An atlas book spread open, revealing colorful maps and geographical wonders.",
+        "file_name": "images/atlas-1052011_1920.jpg"
+      },
+      "image2": {
+        "title": "AI Generated",
+        "id": "ai-generated-8351940_640",
+        "description": "Obraz wygenerowany przez AI przedstawiający unikalny, artystyczny projekt.",
+        "file_name": "images/ai-generated-8351940_640.png"
+      },
+      "title": "O nas",
+      "paragraph": "Nasza biblioteka oferuje spokojne środowisko do czytania i badań. Założona w 1900 roku, z pasją i oddaniem służymy społeczności. Staramy się zapewnić wszechstronną kolekcję zasobów i przyjazne miejsce dla wszystkich.",
+      "list": [
+        "Ponad 100,000 książek",
+        "Wydzielona sekcja dla dzieci",
+        "Zasoby cyfrowe",
+        "Wydarzenia społeczne",
+        "Ekspercka kadra"
+      ]
+    }
+  }
+  

@@ -4,7 +4,7 @@ import { BookType } from "~/types";
 import BookItem from "~/components/BookItem";
  
 export const getServerSideProps = (async () => {
-  const res = await fetch('http://127.0.0.1:8000/books')
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API}books`)
   const books: BookType[] = await res.json()
   return { props: { books } }
 }) satisfies GetServerSideProps<{ books: BookType[] }>

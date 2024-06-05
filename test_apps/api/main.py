@@ -26,6 +26,23 @@ class ImageMetadata(BaseModel):
     description: str
     file_name: str
 
+class Banner(BaseModel):
+    image: ImageMetadata
+    title: str
+    text: str
+    list: List[str]
+
+class AboutUs(BaseModel):
+    image1: ImageMetadata
+    image2: ImageMetadata
+    title: str
+    paragraph: str
+    list: List[str]
+
+class HomePageData(BaseModel):
+    banner: Banner
+    aboutUs: AboutUs
+
 def normalize_text(text: str) -> str:
     if isinstance(text, str):
         return text.replace('\u2028', '').replace('â€”', '—').replace('â€¨', '')
@@ -68,9 +85,9 @@ def read_csv():
         print(f"Error reading CSV file: {e}")
         raise
 
-def read_json():
+def read_json(file_path: str):
     try:
-        with open('gallery.json', 'r') as file:
+        with open(file_path, 'r') as file:
             return json.load(file)
     except Exception as e:
         print(f"Error reading JSON file: {e}")
@@ -83,9 +100,15 @@ except Exception as e:
     print(f"Failed to load CSV at startup: {e}")
 
 try:
-    image_data = read_json()
+    image_data = read_json('gallery.json')
 except Exception as e:
     image_data = None
+    print(f"Failed to load JSON at startup: {e}")
+
+try:
+    homepage_data = read_json('homepage.json')
+except Exception as e:
+    homepage_data = None
     print(f"Failed to load JSON at startup: {e}")
 
 @app.get("/books", response_model=List[Book])
@@ -102,6 +125,21 @@ async def get_books():
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error processing request: {e}")
 
+
+@app.get("/books-new-list", response_model=List[Book])
+async def get_new_books():
+    try:
+        if df is None:
+            raise HTTPException(status_code=500, detail="CSV file not loaded")
+
+        df['priceStartingWith'] = df['priceStartingWith'].astype(str)
+        books = df.sort_values(by=['publishDateYear'], ascending=False).to_dict(orient='records')
+        
+
+        return books[:10]  
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error processing request: {e}")
+
 @app.get("/images-data", response_model=List[ImageMetadata])
 async def get_images():
     try:
@@ -112,6 +150,16 @@ async def get_images():
         random.shuffle(shuffled_images)
         
         return shuffled_images
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error processing request: {e}")
+
+@app.get("/homepage-data", response_model=HomePageData)
+async def get_homepage_data():
+    try:
+        if homepage_data is None:
+            raise HTTPException(status_code=500, detail="JSON file not loaded")
+
+        return homepage_data
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error processing request: {e}")
 
