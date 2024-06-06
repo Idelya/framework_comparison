@@ -1,16 +1,12 @@
 import * as React from "react"
 import Layout from "../components/layout"
 import type { HeadFC, PageProps } from "gatsby"
-import { StaticImage } from "gatsby-plugin-image"
-import { BookType, ImageMetadata } from "../types";
+import { BookType } from "../types";
 import BookItem from "../components/BookItem";
-
-
-const API_URL = 'http://127.0.0.1:8000/';
 
 export async function getServerData() {
   try {
-    const res = await fetch(API_URL + 'books');
+    const res = await fetch(process.env.GATSBY_API_URL + 'books');
     const books: BookType[] = await res.json();
     return {
       props: { books },

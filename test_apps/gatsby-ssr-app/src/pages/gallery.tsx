@@ -1,16 +1,12 @@
 import * as React from "react"
 import Layout from "../components/layout"
 import type { HeadFC, PageProps } from "gatsby"
-import { StaticImage } from "gatsby-plugin-image"
 import { ImageMetadata } from "../types";
-
-
-const API_URL = 'http://127.0.0.1:8000/';
 
 export async function getServerData() {
   try {
-    const res = await fetch(API_URL + 'images-data');
-    const imagesData: ImageMetadata = await res.json();
+    const res = await fetch(process.env.GATSBY_API_URL + 'images-data');
+    const imagesData: ImageMetadata[] = await res.json();
     return {
       props: { imagesData },
     };
@@ -24,7 +20,7 @@ export async function getServerData() {
 
 
 const GalleryPage: React.FC<PageProps> = ({ serverData }) => {
-    const { imagesData } = serverData;
+  const { imagesData } = serverData;
     
   return (
     <Layout>
@@ -32,7 +28,7 @@ const GalleryPage: React.FC<PageProps> = ({ serverData }) => {
         {imagesData.map((img) => 
           <div key={img.id} className='gallery-item'>
             <img
-              src={API_URL + img.file_name}
+              src={process.env.GATSBY_API_URL + img.file_name}
               alt={img.description}
               className='gallery-image'
             />

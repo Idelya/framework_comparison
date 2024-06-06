@@ -3,19 +3,18 @@ import {  useLoaderData } from "@remix-run/react";
 
 import { ImageMetadata } from "~/types";
 
-const API_URL = 'http://127.0.0.1:8000/';
-
 export const loader = async () => {
-    const res = await fetch(API_URL + 'images-data');
-    return json(await res.json());
+    const res = await fetch(process.env.REMIX_API_URL  + 'images-data');
+    const images: ImageMetadata[]  = await res.json();
+    return json({ images, API_URL: process.env.REMIX_API_URL });
 };
 
 export default function GalleryRoute() {
-  const data: ImageMetadata[] = useLoaderData<typeof loader>();
+  const { images, API_URL }: ImageMetadata[] = useLoaderData<typeof loader>();
 
   return (
     <div className='gallery'>
-      {data.map((img) => 
+      {images.map((img) => 
         <div key={img.id} className='gallery-item'>
             <img 
                 src={API_URL + img.file_name} 

@@ -9,11 +9,9 @@ export const meta: MetaFunction = () => {
       { name: "description", content: "Lista ksiazek" },
     ];
   };
-  
-const API_URL = 'http://127.0.0.1:8000/';
 
 export const loader = async () => {
-    const res = await fetch(API_URL + 'books');
+    const res = await fetch(process.env.REMIX_API_URL  + 'books');
     return json(await res.json());
 };
 
@@ -39,17 +37,17 @@ export default function BooksRoute() {
           </thead>
           <tbody>
             {data.map(book => 
-    <tr key={book.id}>
-      <td>{book.id}</td>
-      <td>{book.title}</td>
-      <td>{book.authors}</td>
-      <td>{book.description}</td>
-      <td>{book.category}</td>
-      <td>{book.publisher}</td>
-      <td>{book.priceStartingWith}</td>
-      <td>{book.publishDateMonth}</td>
-      <td>{book.publishDateYear}</td>
-    </tr>
+              <tr key={book.id}>
+                <td>{book.id}</td>
+                <td>{book.title}</td>
+                <td>{book.authors}</td>
+                <td>{book.description}</td>
+                <td>{book.category}</td>
+                <td>{book.publisher}</td>
+                <td>{book.priceStartingWith}</td>
+                <td>{book.publishDateMonth}</td>
+                <td>{book.publishDateYear}</td>
+              </tr>
             )}
           </tbody>
         </table>

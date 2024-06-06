@@ -1,7 +1,13 @@
 import React, { PropsWithChildren } from "react"
-import "./global.css"
-import "./layout.css"
+import "../styles/globals.css"
+import "../styles/styles.css"
+import Header from "./Header"
 
 export default function Layout({ children }: PropsWithChildren<{}>) {
-  return <main className="main">{children}</main>
+  return (
+    <>
+      <Header />
+      <main className="main">{children}</main>
+    </>
+  );
 }
