@@ -1,27 +1,27 @@
 import * as React from "react"
 import Layout from "../components/layout"
-import type { HeadFC, PageProps } from "gatsby"
-import { BookType } from "../types";
+import { graphql, type HeadFC } from "gatsby"
 import BookItem from "../components/BookItem";
 
-export async function getServerData() {
-  try {
-    const res = await fetch(process.env.GATSBY_API_URL + 'books');
-    const books: BookType[] = await res.json();
-    return {
-      props: { books },
-    };
-  } catch (error) {
-    return {
-      props: { books: [] },
-      status: 500,
-    };
+type BooksPageProps = {
+  data: {
+    allBook: {
+      nodes: Array<{    
+        id: string,
+        title: string;
+        authors: string;
+        description?: string;
+        category: string;
+        publisher: string;
+        priceStartingWith: string;
+        publishDateMonth: string;
+        publishDateYear: number;
+      }>
+    }
   }
 }
-
-
-const BooksPage: React.FC<PageProps> = ({ serverData }) => {
-    const { books } = serverData;
+const BooksPage: React.FC<BooksPageProps> = ({ data }) => {
+  const { allBook } = data;
     
   return (
     <Layout>
@@ -42,7 +42,7 @@ const BooksPage: React.FC<PageProps> = ({ serverData }) => {
             </tr>
           </thead>
           <tbody>
-            {books.map(item => 
+            {allBook.nodes.map(item => 
               <BookItem book={item} key={item.id}/>
             )}
           </tbody>
@@ -55,3 +55,21 @@ const BooksPage: React.FC<PageProps> = ({ serverData }) => {
 export default BooksPage
 
 export const Head: HeadFC = () => <title>Spis książek</title>
+
+export const query = graphql`
+  query {
+    allBook {
+      nodes {
+        id
+        title
+        authors
+        description
+        category
+        publisher
+        priceStartingWith
+        publishDateMonth
+        publishDateYear
+      }
+    }
+  }
+`

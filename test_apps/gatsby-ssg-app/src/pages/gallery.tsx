@@ -1,37 +1,46 @@
 import * as React from "react"
 import Layout from "../components/layout"
-import type { HeadFC, PageProps } from "gatsby"
-import { ImageMetadata } from "../types";
+import { graphql, PageProps } from "gatsby"
+import { GatsbyImage, getImage } from "gatsby-plugin-image"
 
-export async function getServerData() {
-  try {
-    const res = await fetch(process.env.GATSBY_API_URL + 'images-data');
-    const imagesData: ImageMetadata[] = await res.json();
-    return {
-      props: { imagesData },
-    };
-  } catch (error) {
-    return {
-      props: { imagesData: [] },
-      status: 500,
-    };
+type GalleryPageProps = {
+  data: {
+    allImageData: {
+      nodes: Array<{
+        id: string,
+        file_name: string;
+        description: string,
+        localFile: {
+          publicURL: string,
+          childImageSharp: {
+            gatsbyImageData: any,
+          }
+        }
+      }>
+    }
   }
 }
 
+const GalleryPage: React.FC<PageProps<GalleryPageProps>> = ({ data }) => {
+  const { allImageData } = data;
 
-const GalleryPage: React.FC<PageProps> = ({ serverData }) => {
-  const { imagesData } = serverData;
-    
   return (
     <Layout>
       <div className='gallery'>
-        {imagesData.map((img) => 
-          <div key={img.id} className='gallery-item'>
-            <img
-              src={process.env.GATSBY_API_URL + img.file_name}
-              alt={img.description}
-              className='gallery-image'
-            />
+        {allImageData.nodes.map((img) => <div key={img.id} className='gallery-item'>
+            {img.localFile.childImageSharp ? (
+              <GatsbyImage
+                image={getImage(img.localFile.childImageSharp.gatsbyImageData)}
+                alt={img.description}
+                className='gallery-image'
+              />
+            ) : (
+              <img
+                src={img.localFile.publicURL}
+                alt={img.description}
+                className='gallery-image'
+              />
+            )}
           </div>
         )}
       </div>
@@ -41,4 +50,22 @@ const GalleryPage: React.FC<PageProps> = ({ serverData }) => {
 
 export default GalleryPage
 
-export const Head: HeadFC = () => <title>Galeria</title>
+export const Head = () => <title>Galeria</title>
+
+export const query = graphql`
+  query {
+    allImageData {
+      nodes {
+        id
+        file_name
+        description
+        localFile {
+          publicURL
+          childImageSharp {
+            gatsbyImageData(width: 750, quality: 100, placeholder: BLURRED)
+          }
+        }
+      }
+    }
+  }
+`
