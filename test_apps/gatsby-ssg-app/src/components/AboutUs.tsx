@@ -1,21 +1,39 @@
+import { useStaticQuery, graphql } from "gatsby";
+import { GatsbyImage, getImage } from "gatsby-plugin-image";
 import React from "react";
-import { ImageMetadata } from "~/types";
 
-interface AboutUsProps {
-  image1: ImageMetadata;
-  image2: ImageMetadata;
-  title: string;
-  paragraph: string;
-  list: string[];
-}
+const AboutUs: React.FC = () => {
+  const { aboutUsData } = useStaticQuery(graphql`
+  query AboutUsDataQuery {
+    aboutUsData {
+      childrenImageDataAboutUs {
+        id
+        localFile {
+          childImageSharp {
+            gatsbyImageData(width: 750, quality: 100, placeholder: BLURRED)
+          }
+        }
+      }
+      image1 {
+        description
+      }
+      image2 {
+        description
+      }
+      title
+      list
+      paragraph
+    }
+    }
+  `);
+  const { title, paragraph, list, childrenImageDataAboutUs, image1, image2 } = aboutUsData;
 
-const AboutUs: React.FC<AboutUsProps> = ({ image1, image2, title, paragraph, list }) => {
   return (
     <section className="aboutus">
       <h2 className="title">{title}</h2>
       <div className="aboutus-content-wrapper">
         <div className="aboutus-image-wrapper">
-          <img src={process.env.GATSBY_API_URL + image1.file_name} alt={image1.description} className="aboutus-image" />
+          <GatsbyImage image={getImage(childrenImageDataAboutUs[0].localFile.childImageSharp.gatsbyImageData)} alt={image1.description} className="aboutus-image" />
         </div>
         <p className="aboutus-paragraph">{paragraph}</p>
       </div>
@@ -26,7 +44,7 @@ const AboutUs: React.FC<AboutUsProps> = ({ image1, image2, title, paragraph, lis
           ))}
         </ul>
         <div className="aboutus-image-wrapper">
-          <img src={process.env.GATSBY_API_URL + image2.file_name} alt={image2.description} className="aboutus-image" />
+          <GatsbyImage image={getImage(childrenImageDataAboutUs[1].localFile.childImageSharp.gatsbyImageData)} alt={image2.description} className="aboutus-image" />
         </div>
       </div>
     </section>

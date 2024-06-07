@@ -20,7 +20,7 @@ const NewBooksList: React.FC =  ()  => {
       }
     }
   `);
-  console.log(allNewBook)
+
   const [selectedBook, setSelectedBook] = useState(allNewBook.nodes[0]);
 
   return (

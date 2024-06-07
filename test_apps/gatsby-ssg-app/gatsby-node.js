@@ -11,6 +11,10 @@ exports.createSchemaCustomization = ({ actions }) => {
     type BannerData implements Node {
       localFile: File @link(from: "fields.localFile")
     }
+
+    type ImageDataAboutUs implements Node @childOf(types: ["AboutUsData"]) {
+      localFile: File @link(from: "fields.localFile")
+    }
   `;
   createTypes(typeDefs);
 };
@@ -88,11 +92,37 @@ exports.sourceNodes = async ({ actions, createNodeId, createContentDigest }) => 
 
     createNode({ ...bannerData, ...nodeBannerMeta });
  
+    console.log('aboutUsData.image1', aboutUsData.image1)
 
-    const nodeAboutUsMeta = {
-      id: createNodeId(`about-us-data`),
-      parent: null,
+    const id1 = createNodeId(`image-data-about-us-1`);
+    const id2 = createNodeId(`image-data-about-us-2`);
+    const aboutUsId = createNodeId(`about-us-data`);
+    createNode({
+      ...aboutUsData.image1,
+      id: id1,
+      parent: aboutUsId,
       children: [],
+      internal: {
+        type: 'ImageDataAboutUs',
+        contentDigest: createContentDigest(aboutUsData.image1),
+      },
+    });
+
+    createNode({
+      ...aboutUsData.image2,
+      id: id2,
+      parent: aboutUsId,
+      children: [],
+      internal: {
+        type: 'ImageDataAboutUs',
+        contentDigest: createContentDigest(aboutUsData.image2),
+      },
+    });
+    
+    const nodeAboutUsMeta = {
+      id: aboutUsId,
+      parent: null,
+      children: [id1, id2],
       internal: {
         type: 'AboutUsData',
         contentDigest: createContentDigest(aboutUsData),
@@ -155,32 +185,21 @@ exports.onCreateNode = async ({ node, actions, store, cache, createNodeId }) => 
     }
   }
 
-  if (node.internal.type === 'AboutUsData') {
-    const fileNode1 = await createRemoteFileNode({
-      url: `${process.env.GATSBY_API_URL}${node.image1.file_name}`,
+  if (node.internal.type === 'ImageDataAboutUs') {
+    console.log('ImageDataAboutUs node')
+    const fileNode = await createRemoteFileNode({
+      url: `${process.env.GATSBY_API_URL}${node.file_name}`,
       parentNodeId: node.id,
       createNode,
       createNodeId,
       cache,
       store,
     });
-    const fileNode2 = await createRemoteFileNode({
-      url: `${process.env.GATSBY_API_URL}${node.image2.file_name}`,
-      parentNodeId: node.id,
-      createNode,
-      createNodeId,
-      cache,
-      store,
-    });
+    console.log(fileNode);
     createNodeField({
         node,
-        name: 'localFile1',
-        value: fileNode1.id,
-    });
-    createNodeField({
-        node,
-        name: 'localFile2',
-        value: fileNode2.id,
+        name: 'localFile',
+        value: fileNode.id,
     });
       
   }

@@ -12,6 +12,7 @@ const IndexPage: React.FC<PageProps> = () => {
   return (
     <Layout>
       <Banner/>
+      <AboutUs />
       <NewBooksList />
       <Form />
     </Layout>
