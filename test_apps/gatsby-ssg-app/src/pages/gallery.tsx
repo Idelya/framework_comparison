@@ -28,20 +28,20 @@ const GalleryPage: React.FC<PageProps<GalleryPageProps>> = ({ data }) => {
     <Layout>
       <div className='gallery'>
         {allImageData.nodes.map((img) => <div key={img.id} className='gallery-item'>
-            {img.localFile.childImageSharp ? (
-              <GatsbyImage
-                image={getImage(img.localFile.childImageSharp.gatsbyImageData)}
-                alt={img.description}
-                className='gallery-image'
-              />
-            ) : (
-              <img
-                src={img.localFile.publicURL}
-                alt={img.description}
-                className='gallery-image'
-              />
-            )}
-          </div>
+          {img.localFile.childImageSharp ? (
+            <GatsbyImage
+              image={getImage(img.localFile.childImageSharp.gatsbyImageData)}
+              alt={img.description}
+              className='gallery-image'
+            />
+          ) : (
+            <img
+              src={img.localFile.publicURL}
+              alt={img.description}
+              className='gallery-image'
+            />
+          )}
+        </div>
         )}
       </div>
     </Layout>
