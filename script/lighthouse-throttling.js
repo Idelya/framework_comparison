@@ -1,5 +1,7 @@
 import fs from 'fs';
 import { createObjectCsvWriter } from 'csv-writer';
+const DEVTOOLS_RTT_ADJUSTMENT_FACTOR = 3.75;
+const DEVTOOLS_THROUGHPUT_ADJUSTMENT_FACTOR = 0.9;
 
 const port = process.argv[2]; // Pobiera port z argumentów linii poleceń
 const pageName = process.argv[3]; // Pobiera nazwę strony z argumentów linii poleceń
@@ -17,11 +19,15 @@ async function runLighthouse(url, chrome) {
     disableStorageReset: true, // Wyłącza cache
     onlyCategories: ['performance'],
     throttling: {
-      rttMs: 250, // Opóźnienie (RTT) w milisekundach
-      throughputKbps: 400, // Prędkość pobierania w kilobitach na sekundę
-      requestLatencyMs: 250, // Opóźnienie żądania w milisekundach
-      uploadThroughputKbps: 400, // Prędkość przesyłania w kilobitach na sekundę
-      cpuSlowdownMultiplier: 1, // Wielokrotność spowolnienia CPU
+        // These values partially align with WebPageTest's definition of "Regular 3G".
+        // These values are meant to roughly align with Chrome UX report's 3G definition which are based
+        // on HTTP RTT of 300-1400ms and downlink throughput of <700kbps.
+        rttMs: 300,
+        throughputKbps: 700,
+        requestLatencyMs: 300 * DEVTOOLS_RTT_ADJUSTMENT_FACTOR,
+        downloadThroughputKbps: 700 * DEVTOOLS_THROUGHPUT_ADJUSTMENT_FACTOR,
+        uploadThroughputKbps: 700 * DEVTOOLS_THROUGHPUT_ADJUSTMENT_FACTOR,
+        cpuSlowdownMultiplier: 4,
     },
   };
 
