@@ -146,10 +146,7 @@ async def get_images():
         if image_data is None:
             raise HTTPException(status_code=500, detail="JSON file not loaded")
         
-        shuffled_images = image_data.copy()
-        random.shuffle(shuffled_images)
-        
-        return shuffled_images
+        return image_data
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error processing request: {e}")
 
