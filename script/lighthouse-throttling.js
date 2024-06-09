@@ -16,7 +16,6 @@ async function runLighthouse(url, chrome) {
   const options = {
     port: chrome.port,
     output: 'json',
-    disableStorageReset: true, // Wyłącza cache
     onlyCategories: ['performance'],
     throttling: {
         // These values partially align with WebPageTest's definition of "Regular 3G".

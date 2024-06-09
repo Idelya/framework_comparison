@@ -5,11 +5,13 @@ import os
 import numpy as np
 import sys
 # List of CSV files and their names
-csv_files = ['Cumulative_Layout_Shift.csv', 'Largest_Contentful_Paint.csv', 'Time_to_Interactive.csv', 'Total_Blocking_Time.csv', 'Speed_Index.csv']
-titles = ['Cumulative Layout Shift', 'Largest Contentful Paint', 'Time to Interactive', 'Total Blocking Time', 'Speed Index']
+#csv_files = ['Cumulative_Layout_Shift.csv', 'Largest_Contentful_Paint.csv', 'Time_to_Interactive.csv', 'Total_Blocking_Time.csv', 'Speed_Index.csv', 'First_Contentful_Paint.csv']
+#titles = ['Cumulative Layout Shift', 'Largest Contentful Paint', 'Time to Interactive', 'Total Blocking Time', 'Speed Index', 'First Contentful Paint']
+csv_files = ['HeapSize.csv', 'RAM.csv']
+titles = ['Heap Size', 'RAM']
 #input_path = 'results/dataHomepage'
 #output_path = 'charts/dataHomepage'
-
+isSizeMeasure = True
 input_path = sys.argv[1]
 output_path = sys.argv[2]
 
@@ -23,9 +25,9 @@ data = {}
 # Load the data from CSV files
 for i, file in enumerate(csv_files):
     df = pd.read_csv(os.path.join(input_path, file))
-    if titles[i] != 'Total Blocking Time':
-        # Convert milliseconds to seconds for all except Total Blocking Time
-        df = df / 1000
+    # if titles[i] != 'Total Blocking Time':
+    #     # Convert milliseconds to seconds for all except Total Blocking Time
+    #     df = df / 1000
     data[titles[i]] = df
 
 # Function to create bar plot with error bars and save it
@@ -40,7 +42,7 @@ def plot_with_error_bars(data, title):
     sns.boxplot(data, palette='Spectral')
     # plt.bar(x, means.values, yerr=[mins.values, maxs.values], capsize=5)
     plt.title(title)
-    plt.ylabel('Czas (sekundy)' if title != 'Total Blocking Time' else 'Czas (milisekundy)')
+    plt.ylabel('Rozmiar (MB)' if isSizeMeasure else 'Czas (sekundy)' if title != 'Total Blocking Time' else 'Czas (milisekundy)')
     plt.xlabel('')
     plt.xticks(x, means.index, rotation=45)  # set x tick labels
     plt.tight_layout()

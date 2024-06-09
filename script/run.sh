@@ -7,7 +7,7 @@ node lighthouse-throttling.js 9007 "" 50 "dataHomepage/Next.js - SSR.csv"
 node lighthouse-throttling.js 46525 "" 50 "dataHomepage/Remix - SSR.csv"
 source .venv/bin/activate
 python3 convertData.py "dataHomepage" "results/dataHomepage"
-python3 chartsSeaBorn.py "results/dataHomepage" "charts/dataHomepage"
+python3 chartsSeaBorn.py "archive/test5-local50/results/dataHomepage" "archive/test5-local50/charts/dataHomepage"
 
 node lighthouse-throttling.js 9000 gallery 50 "dataGallery/Gatsby - SSG.csv"
 node lighthouse-throttling.js 9001 gallery 50 "dataGallery/Gatsby - SSR.csv"

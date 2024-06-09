@@ -14,7 +14,6 @@ async function runLighthouse(url, chrome) {
   const options = {
     port: chrome.port,
     output: 'json',
-    disableStorageReset: true, // Wyłącza cache
     onlyCategories: ['performance'],
   };
 

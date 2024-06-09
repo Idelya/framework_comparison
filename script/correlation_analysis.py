@@ -22,7 +22,8 @@ metrics = [
     'Largest Contentful Paint',
     'First Contentful Paint',
     'Time to Interactive',
-    'Total Blocking Time'
+    'Total Blocking Time',
+    'First Contentful Paint'
 ]
 
 # Create a dictionary to store correlation results for each app
