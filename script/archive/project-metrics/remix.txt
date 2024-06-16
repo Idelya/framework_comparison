@@ -1,0 +1,24 @@
+type    name                                        N     Ca     Ce  I (%)
+------- -------------------------------------- ------ ------ ------ ------
+folder  app                                        17      0     26   100%
+module  app/components/BookItem.tsx                 1      0      1   100%
+module  app/components/Form.tsx                     1      0      2   100%
+module  app/root.tsx                                1      0      5   100%
+folder  app/routes                                  5      0     17   100%
+module  app/routes/_landing._books._index.tsx       1      0      2   100%
+module  app/routes/_landing._books.tsx              1      0      4   100%
+module  app/routes/_landing.tsx                     1      0      5   100%
+module  app/routes/books.tsx                        1      0      3   100%
+module  app/routes/gallery.tsx                      1      0      3   100%
+folder  app/components                              5      3      9    75%
+module  app/components/AboutUs.tsx                  1      1      2    67%
+module  app/components/Banner.tsx                   1      1      2    67%
+module  app/components/Header.tsx                   1      1      2    67%
+folder  app/styles                                  2      2      0     0%
+module  app/styles/global.css                       1      1      0     0%
+module  app/styles/index.css                        1      1      0     0%
+folder  app/types                                   4      0      0     0%
+module  app/types/books-types.ts                    1      0      0     0%
+module  app/types/gallery-types.ts                  1      0      0     0%
+module  app/types/homepage.ts                       1      0      0     0%
+module  app/types/index.ts                          1      0      0     0%

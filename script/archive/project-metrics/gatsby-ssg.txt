@@ -1,0 +1,24 @@
+type    name                                  N     Ca     Ce  I (%) 
+------- -------------------------------- ------ ------ ------ ------ 
+folder  src                                  17      0     20   100%
+folder  src/pages                             3      0     14   100%
+module  src/pages/books.tsx                   1      0      4   100%
+module  src/pages/gallery.tsx                 1      0      4   100%
+module  src/pages/index.tsx                   1      0      6   100%
+module  src/components/AboutUs.tsx            1      1      3    75%
+module  src/components/Banner.tsx             1      1      3    75%
+module  src/components/NewBooksList.tsx       1      1      3    75%
+folder  src/components                        7      8     16    67%
+module  src/components/Header.tsx             1      1      2    67%
+module  src/components/layout.tsx             1      3      4    57%
+module  src/components/BookItem.tsx           1      1      1    50%
+module  src/components/Form.tsx               1      1      1    50%
+module  src/gatsby-types.d.ts                 1      0      0     0%
+folder  src/styles                            2      2      0     0%
+module  src/styles/globals.css                1      1      0     0%
+module  src/styles/styles.css                 1      1      0     0%
+folder  src/types                             4      0      0     0%
+module  src/types/books-types.ts              1      0      0     0%
+module  src/types/gallery-types.ts            1      0      0     0%
+module  src/types/homepage.ts                 1      0      0     0%
+module  src/types/index.ts                    1      0      0     0%
