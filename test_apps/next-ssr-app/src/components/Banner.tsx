@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import { ImageMetadata } from "~/types";
 
-interface BannerProps {
+type BannerProps = {
   image: ImageMetadata;
   title: string;
   text: string;

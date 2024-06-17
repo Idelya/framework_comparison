@@ -1,5 +1,6 @@
 import { MetaFunction, json } from "@remix-run/node";
 import {  useLoaderData } from "@remix-run/react";
+import BookItem from "~/components/BookItem";
 
 import { BookType } from "~/types";
 
@@ -36,19 +37,9 @@ export default function BooksRoute() {
             </tr>
           </thead>
           <tbody>
-            {data.map(book => 
-              <tr key={book.id}>
-                <td>{book.id}</td>
-                <td>{book.title}</td>
-                <td>{book.authors}</td>
-                <td>{book.description}</td>
-                <td>{book.category}</td>
-                <td>{book.publisher}</td>
-                <td>{book.priceStartingWith}</td>
-                <td>{book.publishDateMonth}</td>
-                <td>{book.publishDateYear}</td>
-              </tr>
-            )}
+              {data.map(item => 
+                <BookItem book={item} key={item.id}/>
+              )}
           </tbody>
         </table>
       </div>

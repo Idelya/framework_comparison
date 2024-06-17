@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { BookType } from "~/types";
 
-interface NewBooksListProps {
+type NewBooksListProps = {
   newBooks: BookType[]
 }
 

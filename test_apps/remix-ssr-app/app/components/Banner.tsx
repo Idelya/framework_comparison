@@ -1,7 +1,7 @@
 import React from "react";
 import { ImageMetadata } from "~/types";
 
-interface BannerProps {
+type BannerProps = {
   image: ImageMetadata;
   title: string;
   text: string;

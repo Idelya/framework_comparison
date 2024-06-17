@@ -2,7 +2,6 @@ import { json, type MetaFunction } from "@remix-run/node";
 import { Outlet, useLoaderData } from "@remix-run/react";
 import AboutUs from "~/components/AboutUs";
 import Banner from "~/components/Banner";
-import Form from "~/components/Form";
 import { HomePageData } from "~/types";
 
 export const meta: MetaFunction = () => {

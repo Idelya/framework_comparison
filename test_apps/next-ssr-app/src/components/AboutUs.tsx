@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import { ImageMetadata } from "~/types";
 
-interface AboutUsProps {
+type AboutUsProps = {
   image1: ImageMetadata;
   image2: ImageMetadata;
   title: string;

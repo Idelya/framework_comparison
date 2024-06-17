@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { BookType } from "~/types";
 
-interface NewBooksListProps {
+type NewBooksListProps = {
   newBooks: BookType[]
 }
 

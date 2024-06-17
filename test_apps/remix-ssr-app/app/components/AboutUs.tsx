@@ -1,7 +1,7 @@
 import React from "react";
 import { ImageMetadata } from "~/types";
 
-interface AboutUsProps {
+type AboutUsProps = {
   image1: ImageMetadata;
   image2: ImageMetadata;
   title: string;
