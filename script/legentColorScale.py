@@ -3,8 +3,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 columns = [1, 2, 3, 4, 5]
-colormap = plt.get_cmap('RdYlBu')
-colormap_start, colormap_end = 0.2, 0.83
+colormap = plt.get_cmap('coolwarm')
+colormap_start, colormap_end = 1, 0
 minimum = 1
 maximum = -1
 

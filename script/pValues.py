@@ -18,7 +18,7 @@ for METRIC in METRICS:
         row_s = [t1]
         row_p = [t1]
         for t2 in TYPES:
-            t_stat, p_value = stats.mann(values[t1], values[t2], equal_var=False)
+            t_stat, p_value = stats.mannwhitneyu(values[t1], values[t2])
             row_s.append(t_stat)
             row_p.append(p_value)
         data_s.append(row_s)

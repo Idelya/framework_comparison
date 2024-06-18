@@ -1,15 +1,15 @@
 import re
 import matplotlib.pyplot as plt
 columns = [1, 2, 3, 4, 5]
-colormap = plt.get_cmap('RdYlBu')
-colormap_start, colormap_end = 0.2, 0.83
+colormap = plt.get_cmap('coolwarm')
+colormap_start, colormap_end = 1, 0
 data = '''
-Speed Index & 0.9998 & 0.9997 & 0.8794 & 0.6958 & 0.9998 \\
-Largest Contentful Paint & 0.9185 & 0.9999 & 0.9964 & 0.9929 & 0.9999 \\
-First Contentful Paint & 0.9998 & 0.9997 & 0.8848 & 0.7254 & 0.9998 \\
-Time to Interactive & 0.9699 & 0.9089 & 0.9400 & 0.9320 & 0.9491 \\
-Total Blocking Time & -0.0705 & -0.1187 & -0.8502 & 0.0597 & 0.1425 \\
-First Contentful Paint &0.9997 & 0.9996 & 0.8847 & 0.7253 & 0.9998\\
+Speed Index                & 0.866 & 0.866 & 0.832 & 0.836 & 0.866 \\
+Largest Contentful Paint   & 0.866 & 0.866 & 0.866 & 0.866 & 0.866 \\
+First Contentful Paint     & 0.866 & 0.866 & 0.832 & 0.836 & 0.866 \\
+Time to Interactive        & 0.866 & 0.797 & 0.866 & 0.866 & 0.866 \\
+Total Blocking Time        & -0.092 & -0.164 & -0.847 & 0.072 & 0.143 \\
+First Contentful Paint     & 0.866 & 0.866 & 0.832 & 0.836 & 0.866 \\
 '''
 minimum = 1
 maximum = -1

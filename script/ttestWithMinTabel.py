@@ -1,6 +1,9 @@
 import pandas as pd
 import scipy.stats as stats
 
+print(stats.mannwhitneyu([ 3, 5, 1, 4, 3, 5], [4, 8, 6, 2, 1, 9]))
+
+
 DIR = 'archive/test5-local50/dataHomepage'
 TYPES = ['Gatsby - SSG', 'Gatsby - SSR', 'Next.js - SSG', 'Next.js - SSR', 'Remix - SSR']
 
@@ -27,8 +30,9 @@ for METRIC in [
         for j, t2 in enumerate(TYPES[1:]):
             if i <= j:
             # if True:
-                t_stat, p_value = stats.ttest_ind(values[t1], values[t2], equal_var=False)
+                t_stat, p_value = stats.mannwhitneyu(values[t1], values[t2])
                 row_s.append(t_stat)
+                # print(t_stat, p_value)
                 row_p.append(p_value)
             else:
                 row_s.append('')
@@ -66,4 +70,3 @@ for METRIC in [
 \\begin{{tabular}}{{lcccc}}
 ''' + text + '\\end{table}'
     print(text)
-    # print(data_p)

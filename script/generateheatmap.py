@@ -16,15 +16,14 @@ files = [
     'Remix - SSR'
 ]
 
-# Define metrics
-metrics = [
-    'Speed Index',
-    'Largest Contentful Paint',
-    'First Contentful Paint',
-    'Time to Interactive',
-    'Total Blocking Time',
-    'First Contentful Paint'
-]
+# Define metrics and their short names
+metrics = {
+    'Speed Index': 'SI',
+    'Largest Contentful Paint': 'LCP',
+    'First Contentful Paint': 'FCP',
+    'Time to Interactive': 'TTI',
+    'Total Blocking Time': 'TBT'
+}
 
 # Create a dictionary to store correlation results for each app
 correlation_results = {}
@@ -45,8 +44,11 @@ for file in files:
     # Combine both datasets
     combined_data = pd.concat([normal_data, throttling_data], ignore_index=True)
 
+    # Rename columns to use short metric names
+    combined_data.rename(columns=metrics, inplace=True)
+
     # Calculate correlations for numeric columns only
-    numeric_columns = metrics + ['throttled']
+    numeric_columns = list(metrics.values()) + ['throttled']
     correlations = combined_data[numeric_columns].corr(method='spearman')
 
     # Get correlation of each metric with 'throttled'
