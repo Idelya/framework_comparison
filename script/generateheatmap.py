@@ -45,10 +45,11 @@ for file in files:
     combined_data = pd.concat([normal_data, throttling_data], ignore_index=True)
 
     # Rename columns to use short metric names
-    combined_data.rename(columns=metrics, inplace=True)
+    # combined_data.rename(columns=metrics, inplace=True)
 
     # Calculate correlations for numeric columns only
-    numeric_columns = list(metrics.values()) + ['throttled']
+    numeric_columns = list(metrics.keys()) + ['throttled']
+    # numeric_columns = list(metrics.values()) + ['throttled']
     correlations = combined_data[numeric_columns].corr(method='spearman')
 
     # Get correlation of each metric with 'throttled'
@@ -63,10 +64,14 @@ correlation_df = pd.DataFrame(correlation_results)
 # Save the correlation results to a file
 correlation_df.to_csv('correlation_with_throttling_per_app.csv')
 
+correlation_df = correlation_df.rename({f: f.replace(' - ', '\n') for f in files}, axis=1)
 # Visualization - Correlation heatmap for each app
-plt.figure(figsize=(12, 8))
+plt.figure(figsize=(6, 4))
 sns.heatmap(correlation_df, annot=True, cmap='coolwarm', fmt='.2f')
-plt.title('Korelacja ograniczeń sieci z prędkością aplikacji.')
+# plt.title('Korelacja ograniczeń sieci z prędkością aplikacji.')
+plt.xticks(rotation=0)
+plt.yticks(rotation=0)
+plt.tight_layout()
 plt.savefig('correlation_heatmap_per_app.png')
 plt.show()
 

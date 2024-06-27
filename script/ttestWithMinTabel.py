@@ -22,26 +22,23 @@ for METRIC in [
 
     data_s = []
     data_p = []
-    # for i, t1 in enumerate(TYPES):
-    for i, t1 in enumerate(TYPES[:-1]):
+    for i, t1 in enumerate(TYPES):
+    # for i, t1 in enumerate(TYPES[:-1]):
         row_s = [t1.replace(' - ', ' ')]
         row_p = [t1.replace(' - ', ' ')]
-        # for j, t2 in enumerate(TYPES):
-        for j, t2 in enumerate(TYPES[1:]):
-            if i <= j:
+        for j, t2 in enumerate(TYPES):
+        # for j, t2 in enumerate(TYPES[1:]):
             # if True:
+                print(t1, t2)
                 t_stat, p_value = stats.mannwhitneyu(values[t1], values[t2])
                 row_s.append(t_stat)
                 # print(t_stat, p_value)
                 row_p.append(p_value)
-            else:
-                row_s.append('')
-                row_p.append('')
         data_s.append(row_s)
         data_p.append(row_p)
 
-    # cols = [t.replace(' - ', ' ') for t in TYPES]
-    cols = [t.replace(' - ', ' ') for t in TYPES[1:]]
+    cols = [t.replace(' - ', ' ') for t in TYPES]
+    # cols = [t.replace(' - ', ' ') for t in TYPES[1:]]
     data_s = pd.DataFrame(data_s, columns=['id'] + cols).set_index('id')
     data_p = pd.DataFrame(data_p, columns=['id'] + cols).set_index('id')
 
